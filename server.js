@@ -2,7 +2,8 @@ const express = require("express");
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
 const e = require("express");
-//const fs = require("fs");
+const { exit } = require("process");
+const { first } = require("rxjs");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -51,10 +52,21 @@ const promptUser = () => {
 
         case "View All Roles":
           console.log("View All Roles");
+          getAllRoles();
           break;
 
         case "View All Employees":
           console.log("View All Employees");
+          getAllEmployees();
+          break;
+
+        case "Quit":
+          exit();
+          break;
+
+        case "Add Employee":
+          addEmployee();
+          break;
 
         default:
           break;
@@ -66,11 +78,52 @@ const promptUser = () => {
 promptUser();
 
 getAllDepartments = () => {
-  db.query("SELECT * FROM `departments`", function (err, results, fields) {
-    console.log(results); // results contains rows returned by server
+  db.query("SELECT * FROM `departments`", function (err, results) {
+    console.table(results); // results contains rows returned by server
   });
 };
 
+addEmployee = () => {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "What is the employee's first name?",
+      },
+      {
+        type: "input",
+        name: "surName",
+        message: "What is the employee's first name?",
+      },
+    ])
+    .then((answers) => {
+      const { firstName, surName } = answers;
+      db.query(
+        "INSERT INTO Employees SET ?",
+        {
+          first_name: firstName,
+          last_name: surName,
+        },
+
+        function (err, results) {
+          console.table(results); // results contains rows returned by server
+        }
+      );
+    })
+    .catch((err) => console.log("ERROR: ", err));
+};
+
+getAllRoles = () => {
+  db.query("SELECT * FROM `roles`", function (err, results) {
+    console.table(results); // results contains rows returned by server
+  });
+};
+getAllEmployees = () => {
+  db.query("SELECT * FROM `employees`", function (err, results) {
+    console.table(results); // results contains rows returned by server
+  });
+};
 app.use((req, res) => {
   res.status(404).end();
 });
