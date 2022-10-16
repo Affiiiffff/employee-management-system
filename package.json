@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Affiiiffff/employee-management-system#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "inquirer": "^9.1.3",
     "mysql2": "^2.3.3"
   }
 }
