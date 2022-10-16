@@ -1,3 +1,8 @@
+
+
+
+
+
 INSERT INTO departments (department_name)
 VALUES  ("Finance"),
         ("Tech Support"),
