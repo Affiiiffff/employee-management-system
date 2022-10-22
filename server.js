@@ -87,7 +87,8 @@ promptUser();
 
 getAllDepartments = () => {
   db.query("SELECT * FROM `departments`", function (err, results) {
-    console.table(results); // results contains rows returned by server
+    console.table(results);
+    promptUser(); // results contains rows returned by server
   });
 };
 
@@ -112,13 +113,15 @@ addDepartment = () => {
           console.table(results); // results contains rows returned by server
         }
       );
+      promptUser();
     })
     .catch((err) => console.log("ERROR: ", err));
 };
 
 getAllRoles = () => {
   db.query("SELECT * FROM `roles`", function (err, results) {
-    console.table(results); // results contains rows returned by server
+    console.table(results);
+    promptUser(); // results contains rows returned by server
   });
 };
 
@@ -149,13 +152,15 @@ addRole = () => {
           console.table(results); // results contains rows returned by server
         }
       );
+      promptUser();
     })
     .catch((err) => console.log("ERROR: ", err));
 };
 
 getAllEmployees = () => {
   db.query("SELECT * FROM `employees`", function (err, results) {
-    console.table(results); // results contains rows returned by server
+    console.table(results);
+    promptUser(); // results contains rows returned by server
   });
 };
 
@@ -186,6 +191,7 @@ addEmployee = () => {
           console.table(results); // results contains rows returned by server
         }
       );
+      promptUser();
     })
     .catch((err) => console.log("ERROR: ", err));
 };
