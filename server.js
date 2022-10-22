@@ -86,8 +86,9 @@ const promptUser = () => {
 promptUser();
 
 getAllDepartments = () => {
-  db.query("SELECT * FROM `departments`", function (err, results) {
-    console.table(results);
+  db.query("SELECT * FROM `departments`", function (err, depresults) {
+    console.table(depresults);
+
     promptUser(); // results contains rows returned by server
   });
 };
@@ -138,21 +139,27 @@ addRole = () => {
         name: "Salary",
         message: "What is the salary for this role?",
       },
+      {
+        type: "list",
+        name: "departmentName",
+        message: "What department does this role belong?",
+        choices: ["Tech", "Sales", "Finance", "Service"],
+      },
     ])
     .then((answers) => {
-      const { role, Salary } = answers;
+      const { role, Salary, departmentName } = answers;
       db.query(
         "INSERT INTO roles SET ?",
         {
           title: role,
           salary: Salary,
+          department_id: departmentName,
         },
 
         function (err, results) {
           console.table(results); // results contains rows returned by server
         }
       );
-      promptUser();
     })
     .catch((err) => console.log("ERROR: ", err));
 };
@@ -176,6 +183,18 @@ addEmployee = () => {
         type: "input",
         name: "surName",
         message: "What is the employee's last name?",
+      },
+      {
+        type: "list",
+        name: "role",
+        message: "What is the role for this employee?",
+        choices: ["Manager", "Advisor", "Assitant", "New role"],
+      },
+      {
+        type: "list",
+        name: "managerName",
+        message: "Who is the manager of this employee?",
+        choices: ["John", "Sarah", "Alex", "New Manager"],
       },
     ])
     .then((answers) => {
