@@ -64,8 +64,16 @@ const promptUser = () => {
           exit();
           break;
 
+        case "Add Department":
+          addDepartment();
+          break;
+
         case "Add Employee":
           addEmployee();
+          break;
+
+        case "Add Role":
+          addRole();
           break;
 
         default:
@@ -113,6 +121,38 @@ getAllRoles = () => {
     console.table(results); // results contains rows returned by server
   });
 };
+
+addRole = () => {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "role",
+        message: "What is the role you'd like to create?",
+      },
+      {
+        type: "input",
+        name: "Salary",
+        message: "What is the salary for this role?",
+      },
+    ])
+    .then((answers) => {
+      const { role, Salary } = answers;
+      db.query(
+        "INSERT INTO roles SET ?",
+        {
+          title: role,
+          salary: Salary,
+        },
+
+        function (err, results) {
+          console.table(results); // results contains rows returned by server
+        }
+      );
+    })
+    .catch((err) => console.log("ERROR: ", err));
+};
+
 getAllEmployees = () => {
   db.query("SELECT * FROM `employees`", function (err, results) {
     console.table(results); // results contains rows returned by server
