@@ -2,7 +2,7 @@
 
 ##Link to Demo Bivid
 
-[Link to Demo Vid](https://drive.google.com/file/d/1SzHTRaZmC-D5tsXfuDLjtYlQ9BIuR-eX/view)
+[Link to Demo Vid](https://drive.google.com/file/d/1EAee_vgBUlcca25aSN_Nc6Yqnq_MWEhW/view)
 
 ## Screenshot Of Working application
 
