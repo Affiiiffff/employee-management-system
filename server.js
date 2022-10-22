@@ -83,27 +83,21 @@ getAllDepartments = () => {
   });
 };
 
-addEmployee = () => {
+addDepartment = () => {
   return inquirer
     .prompt([
       {
         type: "input",
-        name: "firstName",
-        message: "What is the employee's first name?",
-      },
-      {
-        type: "input",
-        name: "surName",
-        message: "What is the employee's first name?",
+        name: "department",
+        message: "What is the name of the department you'd like to create?",
       },
     ])
     .then((answers) => {
-      const { firstName, surName } = answers;
+      const { department } = answers;
       db.query(
-        "INSERT INTO Employees SET ?",
+        "INSERT INTO departments SET ?",
         {
-          first_name: firstName,
-          last_name: surName,
+          department_name: department,
         },
 
         function (err, results) {
@@ -124,6 +118,38 @@ getAllEmployees = () => {
     console.table(results); // results contains rows returned by server
   });
 };
+
+addEmployee = () => {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "What is the employee's first name?",
+      },
+      {
+        type: "input",
+        name: "surName",
+        message: "What is the employee's last name?",
+      },
+    ])
+    .then((answers) => {
+      const { firstName, surName } = answers;
+      db.query(
+        "INSERT INTO Employees SET ?",
+        {
+          first_name: firstName,
+          last_name: surName,
+        },
+
+        function (err, results) {
+          console.table(results); // results contains rows returned by server
+        }
+      );
+    })
+    .catch((err) => console.log("ERROR: ", err));
+};
+
 app.use((req, res) => {
   res.status(404).end();
 });
